@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Product, ProductGallery
 from category.models import Category
 from carts.views import _cart_id
 from carts.models import CartItem
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.http import HttpResponse
+from orders.models import OrderProduct
 # Create your views here.
 def store(request, category_slug=None):
     categories = None
@@ -45,9 +46,22 @@ def product_detail(request, category_slug, product_slug):
     except Exception as e:
         raise e
 
+    if request.user.is_authenticated:
+        try:
+            orderproduct = OrderProduct.objects.filter(user=request.user, product_id=single_product.id).exists()
+        except OrderProduct.DoesNotExist:
+            orderproduct = None
+    else:
+        orderproduct = None
+
+    # Get the product gallery
+    product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+
     context = {
         'single_product': single_product,
         'in_cart' : in_cart,
+        'orderproduct': orderproduct,
+        'product_gallery': product_gallery,
     }
     return render(request, 'store/product_detail.html', context)
 

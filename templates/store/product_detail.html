@@ -11,11 +11,19 @@
 	<div class="row no-gutters">
 		<aside class="col-md-6">
 <article class="gallery-wrap">
-	<div class="img-big-wrap">
-	   <a href="#"><img src="{{single_product.images.url}}"></a>
+	<div class="img-big-wrap mainImage">
+	   <center><img src="{{ single_product.images.url }}"></center>
 	</div> <!-- img-big-wrap.// -->
 
 </article> <!-- gallery-wrap .end// -->
+<ul class="thumb">
+	<li>
+		<a href="{{ single_product.images.url }}" target="mainImage"><img src="{{ single_product.images.url }}" alt="Product Image"></a>
+		{% for i in product_gallery %}
+		<a href="{{i.image.url}}" target="mainImage"><img src="{{i.image.url}}" alt="Product Image"></a>
+		{% endfor %}
+	</li>
+</ul>
 		</aside>
 		<main class="col-md-6 border-left">
 
@@ -70,7 +78,7 @@
 
 <br>
 
-<div class="row">
+<!-- <div class="row">
 			<div class="col-md-9">
 
 	<header class="section-heading">
@@ -87,7 +95,7 @@
 
 			</div>
 		</div> <!-- icontext.// -->
-		<div class="mt-3">
+		<!-- <div class="mt-3">
 			<p>
 				Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -99,7 +107,7 @@
 
 
 	</div> <!-- col.// -->
-</div> <!-- row.// -->
+<!-- </div> <!-- row.// -->
 
 
 </div> <!-- container .//  -->
